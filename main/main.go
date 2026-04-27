@@ -1,12 +1,18 @@
 package main
 
 import (
+	"event-bookings/db"
+	"event-bookings/routers"
 	"fmt"
-
-	"github.com/gin-gonic/gin"
 )
 
 func main() {
 	fmt.Println("Welcome to the Event Booking System!")
-	gin.New().Run(":8080")
+
+	db.InitDB()
+	server := routers.GetServer()
+
+	if err := server.Run("localhost:8080"); err != nil {
+		fmt.Printf("Failed to start server: %s\n", err.Error())
+	}
 }
